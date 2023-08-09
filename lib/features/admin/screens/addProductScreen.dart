@@ -1,6 +1,9 @@
 // ignore: file_names
 import 'dart:io';
+import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:e_commerce_app/constants/globalVariables.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:e_commerce_app/constants/utils.dart';
 import 'package:flutter/material.dart';
@@ -103,38 +106,53 @@ class _AddProductScreenState extends State<AddProductScreen> {
               const SizedBox(
                 height: 20,
               ),
-              GestureDetector(
-                onTap: addImages,
-                child: DottedBorder(
-                    borderType: BorderType.RRect,
-                    radius: const Radius.circular(10),
-                    dashPattern: const [10, 4],
-                    strokeCap: StrokeCap.round,
-                    child: Container(
-                      width: double.infinity,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.folder_open_outlined,
-                            size: 40,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Select Product images",
-                            style: TextStyle(
-                                fontSize: 15, color: Colors.grey.shade400),
-                          ),
-                        ],
-                      ),
-                    )),
-              ),
+              images.isNotEmpty
+                  ? CarouselSlider(
+                      items: images.map((e) {
+                        return Builder(
+                            builder: ((BuildContext context) => Image.file(
+                                  e,
+                                  fit: BoxFit.cover,
+                                  height: 200,
+                                )));
+                      }).toList(),
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        height: 210,
+                      ))
+                  : GestureDetector(
+                      onTap: addImages,
+                      child: DottedBorder(
+                          borderType: BorderType.RRect,
+                          radius: const Radius.circular(10),
+                          dashPattern: const [10, 4],
+                          strokeCap: StrokeCap.round,
+                          child: Container(
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.folder_open_outlined,
+                                  size: 40,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "Select Product images",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey.shade400),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
               const SizedBox(
                 height: 14,
               ),

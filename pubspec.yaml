@@ -38,16 +38,17 @@ dependencies:
 dev_dependencies:
   badges: ^3.1.1
   carousel_slider: ^4.2.1
+  cloudinary_public: ^0.21.0
   dotted_border: ^2.0.0+3
   file_picker: ^4.5.1
-  image_picker: ^0.8.4+3
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
   http: ^0.13.6
+  image_picker: ^0.8.4+3
+  permission_handler: ^10.4.3
   provider: ^5.0.0
   shared_preferences: ^2.2.0
-  permission_handler: ^10.4.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -6,6 +6,7 @@ import 'package:e_commerce_app/models/user.dart';
 import 'package:e_commerce_app/constants/globalVariables.dart';
 import 'package:e_commerce_app/provider/userProvider.dart';
 import 'package:e_commerce_app/CommonWidgets/bottomBar.dart';
+import 'package:e_commerce_app/sensitive/sense.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +34,7 @@ class authService {
       );
       print("egfhioefi");
       http.Response res = await http.post(
-        Uri.parse('http://172.20.161.58:3000/api/signup'),
+        Uri.parse('$uri/api/signup'),
         // Uri.parse('http://localhost:3000/api/signup'),
         body: user.toJson(),
         headers: <String, String>{
@@ -70,7 +71,7 @@ class authService {
       print("hvhinrf2");
 
       http.Response res = await http.post(
-        Uri.parse('http://172.20.161.58:3000/api/signin'),
+        Uri.parse('$uri/api/signin'),
         // Uri.parse('http://localhost:3000/api/signup'),
         body: jsonEncode({
           'email': email,
@@ -117,7 +118,7 @@ class authService {
       }
 
       var tokenRes = await http.post(
-        Uri.parse('http://172.20.161.58:3000/tokenIsValid'),
+        Uri.parse('$uri/tokenIsValid'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': token! // Remove unnecessary space
@@ -129,7 +130,7 @@ class authService {
       if (response == true) {
         //get user data
         http.Response userRes = await http.get(
-          Uri.parse('http://172.20.161.58:3000/'),
+          Uri.parse('$uri/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token // Remove unnecessary space
@@ -158,7 +159,7 @@ class authService {
           prefs.getString('x-auth-token') ?? ''; // Default to empty string
 
       var tokenRes = await http.post(
-        Uri.parse('http://172.20.161.58:3000/tokenIsValid'),
+        Uri.parse('$uri/tokenIsValid'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': token,
@@ -169,7 +170,7 @@ class authService {
 
       if (response == true) {
         http.Response userRes = await http.get(
-          Uri.parse('http://172.20.161.58:3000/'),
+          Uri.parse('$uri/'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token,

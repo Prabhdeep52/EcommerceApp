@@ -6,6 +6,7 @@
 // import 'dart:js';
 
 import 'package:e_commerce_app/features/admin/screens/adminScreen.dart';
+import 'package:e_commerce_app/initState.dart';
 import 'package:e_commerce_app/provider/userProvider.dart';
 import 'package:e_commerce_app/features/auth/screens/authScreen.dart';
 import 'package:e_commerce_app/features/home/homeScreen.dart';
@@ -42,11 +43,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final authService authservice = authService();
-  @override
-  void initState() {
-    super.initState();
-    authservice.getUserData(context: context);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   authservice.getUserData(context: context);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,27 +58,26 @@ class _MyAppState extends State<MyApp> {
         splitScreenMode: true,
         builder: (context, child) {
           return ScaffoldMessenger(
-            key: scaffoldMessengerKey,
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'First Method',
-              // You can use the library anywhere in the app even in theme
-              theme: ThemeData().copyWith(
-                useMaterial3: true,
-                // brightness: Brightness.dark,
-                colorScheme: ColorScheme.fromSeed(
-                    seedColor: const Color.fromARGB(255, 63, 17, 177)),
-                // scaffoldBackgroundColor: const Color.fromARGB(255, 50, 58, 60),
-              ),
-              onGenerateRoute: (settings) => generateRoute(settings),
-              // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-              //     ? Provider.of<UserProvider>(context).user.type == 'user'
-              //         ? const BottomAppBar()
-              //         : const AdminScreen()
-              //     : const AuthScreen()),
-              home: AdminScreen(),
-            ),
-          );
+              key: scaffoldMessengerKey,
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'First Method',
+                // You can use the library anywhere in the app even in theme
+                theme: ThemeData().copyWith(
+                  useMaterial3: true,
+                  // brightness: Brightness.dark,
+                  colorScheme: ColorScheme.fromSeed(
+                      seedColor: const Color.fromARGB(255, 63, 17, 177)),
+                  // scaffoldBackgroundColor: const Color.fromARGB(255, 50, 58, 60),
+                ),
+                onGenerateRoute: (settings) => generateRoute(settings),
+                // home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+                //     ? Provider.of<UserProvider>(context).user.type == 'user'
+                //         ? const BottomAppBar()
+                //         : const AdminScreen()
+                //     : const AuthScreen()),
+                home: InitState(),
+              ));
         });
   }
 }
