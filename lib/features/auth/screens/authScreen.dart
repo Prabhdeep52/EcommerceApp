@@ -1,15 +1,9 @@
 import 'package:e_commerce_app/features/auth/services/authService.dart';
+import 'package:e_commerce_app/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
-// import 'package:chatapp/widgets/user_image_picker.dart';
-// import 'package:chat_app/screens/signUpScreen.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
-// final _firebase = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
   static const String routeName = "/authScreen";
@@ -31,8 +25,9 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-
-  void signUpUser(BuildContext) {
+  final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+  void signUpUser(BuildContext context) {
     print("sign up methd called");
     authService().signUpUser(
       context: context,
@@ -42,7 +37,7 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  void signInUser(BuildContext) {
+  void signInUser(BuildContext context) {
     print("sign in methd called");
     authService().signInUser(
       context: context,
@@ -51,7 +46,8 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
-  void dispose() {
+  @override
+  Future<void> dispose() async {
     // Clean up the controller when the widget is removed from the widget tree.
     _emailController.dispose();
     _nameController.dispose();
@@ -62,6 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(
+      key: scaffoldMessengerKey,
       child: Scaffold(
         body: GestureDetector(
           onTap: () {
@@ -260,7 +257,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               Text(
                                 "Don't have an account?",
                                 style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 12.sp,
                                   color: Colors.black,
                                 ),
                               ),
@@ -273,7 +270,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 child: Text(
                                   "Create an account",
                                   style: TextStyle(
-                                    fontSize: 14.sp,
+                                    fontSize: 12.sp,
                                     color:
                                         const Color.fromARGB(255, 94, 99, 251),
                                   ),
@@ -287,7 +284,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               Text(
                                 "Already have an account?",
                                 style: TextStyle(
-                                  fontSize: 14.sp,
+                                  fontSize: 12.sp,
                                   color: Colors.black,
                                 ),
                               ),
@@ -300,7 +297,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                 child: Text(
                                   "Click to sign in ",
                                   style: TextStyle(
-                                    fontSize: 14.sp,
+                                    fontSize: 12.sp,
                                     color:
                                         const Color.fromARGB(255, 94, 99, 251),
                                   ),

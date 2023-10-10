@@ -1,17 +1,20 @@
 import 'dart:convert';
 
-import 'package:e_commerce_app/constants/errorHandling.dart';
-import 'package:e_commerce_app/constants/utils.dart';
-import 'package:e_commerce_app/models/user.dart';
-import 'package:e_commerce_app/constants/globalVariables.dart';
-import 'package:e_commerce_app/provider/userProvider.dart';
-import 'package:e_commerce_app/CommonWidgets/bottomBar.dart';
-import 'package:e_commerce_app/sensitive/sense.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+// ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
+// ignore: depend_on_referenced_packages
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:e_commerce_app/CommonWidgets/bottomBar.dart';
+import 'package:e_commerce_app/constants/errorHandling.dart';
+import 'package:e_commerce_app/models/user.dart';
+import 'package:e_commerce_app/provider/userProvider.dart';
+import 'package:e_commerce_app/sensitive/sense.dart';
+
+// ignore: camel_case_types
 class authService {
   //SIGN UP USER
 
@@ -74,12 +77,11 @@ class authService {
         Uri.parse('$uri/api/signin'),
         // Uri.parse('http://localhost:3000/api/signup'),
         body: jsonEncode({
-          'email': email,
-          'password': password,
+          "email": email,
+          "password": password,
         }),
         headers: <String, String>{
-          'Content-Type':
-              'application/json; charset=UTF-8', // Remove unnecessary space
+          'Content-Type': 'application/json; charset=UTF-8',
         },
       );
 
@@ -89,18 +91,26 @@ class authService {
           response: res,
           context: context,
           onSuccess: () async {
-            Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+            print("err");
+            print(jsonDecode(res.body)['token']);
             SharedPreferences prefs = await SharedPreferences.getInstance();
+
+            // ignore: use_build_context_synchronously
+            Provider.of<UserProvider>(context, listen: false).setUser(res.body);
             await prefs.setString(
                 'x-auth-token', jsonDecode(res.body)['token']);
-            // ignore: use_build_context_synchronously
-            Navigator.pushNamedAndRemoveUntil(
-                context, BottomBar.routeName, (route) => false);
+            print("Navigate");
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) {
+                return BottomBar();
+              },
+            ));
           });
     } catch (e) {
-      // Catch and handle any exceptions during the HTTP request
+      // // Catch and handle any exceptions during the HTTP request
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('An error occurred: ${e.toString()}')));
+      print("Error");
     }
   }
 
@@ -153,16 +163,17 @@ class authService {
     required BuildContext context,
   }) async {
     try {
-      var userProvider = Provider.of<UserProvider>(context, listen: false);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token =
-          prefs.getString('x-auth-token') ?? ''; // Default to empty string
-
+          prefs.getString('x-auth-token'); // Default to empty string
+      if (token == null) {
+        prefs.setString('x-auth-token', " ");
+      }
       var tokenRes = await http.post(
         Uri.parse('$uri/tokenIsValid'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': token,
+          'x-auth-token': token!,
         },
       );
 
@@ -177,6 +188,7 @@ class authService {
           },
         );
 
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(jsonDecode(userRes.body));
       }
     } catch (e) {

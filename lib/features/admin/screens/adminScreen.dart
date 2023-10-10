@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/constants/globalVariables.dart';
+import 'package:e_commerce_app/features/admin/screens/addProductScreen.dart';
 import 'package:e_commerce_app/features/admin/screens/products.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,14 +16,15 @@ class _AdminScreenState extends State<AdminScreen> {
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
+  void NavigateToAddProduct() {
+    Navigator.pushNamed(context, AddProductScreen.routeName);
+  }
 
   List<Widget> pages = [
+    Text("Af"),
+    // ProductsScreen(),
     ProductsScreen(),
     ProductsScreen(),
-    ProductsScreen(),
-    // Center(
-    //   child: Text("hh"),
-    // ),
     // Center(
     //   child: Text("hh"),
     // ),
@@ -65,7 +67,7 @@ class _AdminScreenState extends State<AdminScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => NavigateToAddProduct,
                       icon: const Icon(Icons.search),
                       iconSize: 28,
                     )

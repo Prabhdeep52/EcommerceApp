@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/provider/userProvider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +26,12 @@ class _InitStateState extends State<InitState> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<UserProvider>(context).user.token.isNotEmpty
-        ? const HomeScreen()
-        : const AuthScreen();
+    return ScaffoldMessenger(
+      child: Scaffold(
+        body: Provider.of<UserProvider>(context).user.token.isNotEmpty
+            ? const HomeScreen()
+            : const AuthScreen(),
+      ),
+    );
   }
 }

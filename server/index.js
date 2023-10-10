@@ -4,6 +4,8 @@ const mongoose = require("mongoose") ;
 
 //import from other files 
 const authRouter = require("./routes/auth");
+const adminRouter = require("./routes/admin");
+const ProductRouter = require("./routes/products");
 
 
 const app = express()  ;
@@ -13,6 +15,8 @@ const db = "mongodb+srv://prabhdeep:flutterprojectecommerce@cluster0.whztce9.mon
 //middleware 
 app.use(express.json()) ; 
 app.use(authRouter)  ;
+app.use(adminRouter); 
+app.use(ProductRouter);
 
 //connection
 

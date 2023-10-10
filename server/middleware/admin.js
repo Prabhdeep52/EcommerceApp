@@ -9,19 +9,22 @@ const admin = async (req , res , next) => {
          if(!token) return res.status(401).json({msg: "No auth token , access denied !"}); 
          
          const isVerified = jwt.verify(token , "passwordKey");
-         if(!isVerified) return res.status(401),json({msg : "Authorization failed , access denied. "});
+         if(!isVerified) return res.status(401).json({msg : "Authorization failed , access denied. "});
 
          const user = await User.findById(isVerified.id) ; 
          if(user.type == "user" || user.type == "seller"){
             return res.status(400).json({msg : "You are not the admin"} ) ; 
          }
 
-         req.user = isVerified.token ; 
+         req.user = isVerified.id ; 
          req.token = token ; 
          next() ; 
 
-    }catch(e){
+    }
+    catch(e){
         res.status(300).json({error : e.message});
     }
     
 }
+
+module.exports = admin ; 

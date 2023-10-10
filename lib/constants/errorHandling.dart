@@ -15,10 +15,12 @@ void httpErrorHandling({
         onSuccess();
         break;
       case 400:
+        print("400");
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(jsonDecode(response.body)['msg'])));
         break;
       case 500:
+        print("500");
         // Assume the response body contains JSON data
         final responseData = jsonDecode(response.body);
         final errorMsg =
@@ -28,12 +30,14 @@ void httpErrorHandling({
             .showSnackBar(SnackBar(content: Text(errorMsg)));
         break;
       default:
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(response.statusCode as String)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(response.body)));
       // showSnackBar(context, 'Unexpected status code: ${response.statusCode}');
     }
   } catch (e) {
     // Error parsing the response body as JSON
+    print("a");
+    print(response.body);
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('An error occurred: ${e.toString()}')));
   }

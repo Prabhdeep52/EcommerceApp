@@ -18,7 +18,7 @@ class _BottomBarState extends State<BottomBar> {
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;
-
+  final globalKey = GlobalKey<ScaffoldState>();
   List<Widget> pages = [
     HomeScreen(),
     AccountScreen(),
@@ -39,10 +39,13 @@ class _BottomBarState extends State<BottomBar> {
     });
   }
 
+  // var _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[_page],
+      // key: globalKey,
+      // body: pages[_page],
+      body: Builder(builder: (context) => pages[_page]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
         selectedItemColor: Colors.amber[900],

@@ -14,7 +14,7 @@ const auth = async (req , res , next) => {
          next() ; // now after authentication , we call the callback function 
         
      }  catch(err){
-        res.status(300).json({error : e.message});
+        res.status(300).json({error : err.message});
      }
 }
 
